@@ -12,7 +12,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -89,25 +91,41 @@ namespace ContourAnalysisNS
             samples.Clear();
 
             lock (templates)
-            Parallel.ForEach<Contour<Point>>(contours, (contour) =>
             {
-                var arr = contour.ToArray();
-                Template sample = new Template(arr, contour.Area, samples.templateSize);
-                lock (samples)
-                    samples.Add(sample);
-
-                if (!onlyFindContours)
+                LoadTemplates("waterkiller.bin");
+                Parallel.ForEach<Contour<Point>>(contours, (contour) =>
                 {
-                    FoundTemplateDesc desc = finder.FindTemplate(templates, sample);
+                    var arr = contour.ToArray();
+                    Template sample = new Template(arr, contour.Area, samples.templateSize);
+                    lock (samples)
+                        samples.Add(sample);
 
-                    if (desc != null)
-                        lock (foundTemplates)
-                            foundTemplates.Add(desc);
+                    if (!onlyFindContours)
+                    {
+                        FoundTemplateDesc desc = finder.FindTemplate(templates, sample);
+
+                        if (desc != null)
+                            lock (foundTemplates)
+                                foundTemplates.Add(desc);
+                    }
                 }
+                    );
             }
-            );
             //
             FilterByIntersection(ref foundTemplates);
+        }
+
+        private void LoadTemplates(string fileName)
+        {
+            try
+            {
+                using (FileStream fs = new FileStream(fileName, FileMode.Open))
+                    templates = (Templates)new BinaryFormatter().Deserialize(fs);
+            }
+            catch (Exception ex)
+            {
+                
+            }
         }
 
         private static void FilterByIntersection(ref List<FoundTemplateDesc> templates)

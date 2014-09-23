@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
+﻿using System.Linq;
+﻿using System.Runtime.Serialization.Formatters.Binary;
+﻿using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 ﻿using ContourAnalysisNS;
@@ -18,9 +20,13 @@ namespace Waterkiller
 {
     public partial class Form1 : Form
     {
+        private ImageProcessor processor;
+
         public Form1()
         {
+            processor = new ImageProcessor();
             InitializeComponent();
+            ApplySettings();
         }
 
         private void btScan_Click(object sender, EventArgs e)
@@ -74,9 +80,27 @@ namespace Waterkiller
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void ApplySettings()
         {
-
+            try
+            {
+                processor.equalizeHist = false;
+                processor.finder.maxRotateAngle = 45;
+                processor.minContourArea = 100;
+                processor.minContourLength = 100;
+                processor.finder.maxACFDescriptorDeviation = 5;
+                processor.finder.minACF = 0.85;
+                processor.finder.minICF = 0.96;
+                processor.blur = true;
+                processor.noiseFilter = true;
+                processor.cannyThreshold = 50;
+                processor.adaptiveThresholdBlockSize = 5;
+                processor.adaptiveThresholdParameter = 1.5;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
