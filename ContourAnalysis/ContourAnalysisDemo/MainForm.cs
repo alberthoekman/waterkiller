@@ -145,6 +145,11 @@ namespace ContourAnalysisDemo
         private void ibMain_Paint(object sender, PaintEventArgs e)
         {
             int lowestNumbro = 99;
+            int lowestNumbroBottomPosition = 0;
+
+            // Store all them niggas
+            List<int> bottomPositions = new List<int>();
+            List<String> names = new List<string>();
 
             if (frame == null) return;
 
@@ -160,7 +165,7 @@ namespace ContourAnalysisDemo
             foreach (var contour in processor.contours)
                 if(contour.Total>1)
                 e.Graphics.DrawLines(Pens.Red, contour.ToArray());
-            //
+
             lock (processor.foundTemplates)
             foreach (FoundTemplateDesc found in processor.foundTemplates)
             {
@@ -175,16 +180,23 @@ namespace ContourAnalysisDemo
                 string text = found.template.name;
                 if (showAngle)
                     text += string.Format("\r\nangle={0:000}°\r\nscale={1:0.0}", 180 * found.angle / Math.PI, found.scale);
-                //if(text.Contains("balkje"))
-                //    Console.WriteLine("bla");
+
+                // Store the bottom position and of every found object
+                bottomPositions.Add(foundRect.Bottom);
+                names.Add(text);
 
                 if (IsDigitsOnly(text))
                 {
                     int number = int.Parse(text);
 
+                    // Look for the lowest found number that is not 0
                     if(number > 0 && number < lowestNumbro)
                     {
+                        // Set the lowest number
                         lowestNumbro = number;
+
+                        // Set the bottom position of the lowest number
+                        lowestNumbroBottomPosition = foundRect.Bottom;
                     }
                 }
 
@@ -193,9 +205,26 @@ namespace ContourAnalysisDemo
                 e.Graphics.DrawString(text, font, foreBrush, new PointF(p1.X - font.Height/3, p1.Y - font.Height));
             }
 
+            // If a lowest number has been found, check how many balkjes are visible beneath it
             if (lowestNumbro != 99)
             {
+                // Make it a multiple of 10
                 lowestNumbro *= 10;
+
+                bool correctionOfOne = false;
+                
+                // Now count how many balkjes are visible beneath it
+                for (int i = 0; i < bottomPositions.Count; i++)
+                {
+                    if ((names[i].Contains("balkje") || names[i].Contains("streepje")) && bottomPositions[i] > lowestNumbroBottomPosition)
+                    {
+                        if(correctionOfOne)
+                        lowestNumbro -= 2;
+
+                        correctionOfOne = true;
+                    }
+                }
+
                 Console.WriteLine(lowestNumbro);
             }
 
