@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btScan = new System.Windows.Forms.Button();
             this.btMapSelect = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -38,16 +37,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btScan
-            // 
-            this.btScan.Location = new System.Drawing.Point(32, 75);
-            this.btScan.Name = "btScan";
-            this.btScan.Size = new System.Drawing.Size(75, 23);
-            this.btScan.TabIndex = 0;
-            this.btScan.Text = "Scan";
-            this.btScan.UseVisualStyleBackColor = true;
-            this.btScan.Click += new System.EventHandler(this.btScan_Click);
             // 
             // btMapSelect
             // 
@@ -81,7 +70,6 @@
             this.groupBox1.Controls.Add(this.listBox1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btMapSelect);
-            this.groupBox1.Controls.Add(this.btScan);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(155, 308);
@@ -117,7 +105,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btScan;
         private System.Windows.Forms.Button btMapSelect;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ListBox listBox1;

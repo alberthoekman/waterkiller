@@ -31,9 +31,58 @@ namespace Waterkiller
 
         private void btScan_Click(object sender, EventArgs e)
         {
+        }
+
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
+
+        private void btMapSelect_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                string path = folderBrowser.SelectedPath;
+                loadDirectory(path);
+            }
+        }
+
+        private void loadDirectory(string path)
+        {
+            string[] files = Directory.GetFiles(@path);
+            List<Waterkiller.ListboxItem> formattedFiles = new List<Waterkiller.ListboxItem>();
+            foreach (string file in files)
+            {
+                Waterkiller.ListboxItem entry = new Waterkiller.ListboxItem();
+                entry.Title = Path.GetFileNameWithoutExtension(file);
+                entry.Path = file;
+                formattedFiles.Add(entry);
+            }
+            listBox1.DataSource = formattedFiles;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void laadIn(object sender, EventArgs e)
+        {
+            Waterkiller.ListboxItem selected = (Waterkiller.ListboxItem)listBox1.SelectedItem;
+            pictureBox1.ImageLocation = selected.Path;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+
             label1.Text = "Running";
             ImageProcessor processor = new ImageProcessor();
-            processor.ProcessImage(new Image<Bgr, byte>((Bitmap)Bitmap.FromFile("Geen_Water.jpg")));
+            processor.ProcessImage(new Image<Bgr, byte>((Bitmap)Bitmap.FromFile(selected.Path)));
             var foundTemplates = processor.foundTemplates;
 
 
@@ -91,53 +140,6 @@ namespace Waterkiller
 
                 label1.Text = lowestNumbro.ToString();
             }
-        }
-
-        bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
-        }
-
-        private void btMapSelect_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
-            if (folderBrowser.ShowDialog() == DialogResult.OK)
-            {
-                string path = folderBrowser.SelectedPath;
-                loadDirectory(path);
-            }
-        }
-
-        private void loadDirectory(string path)
-        {
-            string[] files = Directory.GetFiles(@path);
-            List<Waterkiller.ListboxItem> formattedFiles = new List<Waterkiller.ListboxItem>();
-            foreach (string file in files)
-            {
-                Waterkiller.ListboxItem entry = new Waterkiller.ListboxItem();
-                entry.Title = Path.GetFileNameWithoutExtension(file);
-                entry.Path = file;
-                formattedFiles.Add(entry);
-            }
-            listBox1.DataSource = formattedFiles;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void laadIn(object sender, EventArgs e)
-        {
-            Waterkiller.ListboxItem selected = (Waterkiller.ListboxItem)listBox1.SelectedItem;
-            pictureBox1.ImageLocation = selected.Path;
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void ApplySettings()
