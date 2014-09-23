@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+﻿using ContourAnalysisNS;
 
 namespace Waterkiller
 {
@@ -15,6 +16,17 @@ namespace Waterkiller
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void btScan_Click(object sender, EventArgs e)
+        {
+            ImageProcessor processor = new ImageProcessor();
+            processor.ProcessImage(Image.FromFile("Geen_Water.jpg");
+        }
+
+        private void btMapSelect_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
