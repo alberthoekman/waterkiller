@@ -34,12 +34,72 @@ namespace Waterkiller
             processor.ProcessImage(new Image<Bgr, byte>((Bitmap)Bitmap.FromFile("Geen_Water.jpg")));
             var foundTemplates = processor.foundTemplates;
 
-            int number = 0;
-            foreach (var foundTemplateDesc in foundTemplates)
+
+            int lowestNumbro = 99;
+            int lowestNumbroBottomPosition = 0;
+
+            // Store all them niggas
+            List<int> bottomPositions = new List<int>();
+            List<String> names = new List<string>();
+
+            foreach (var found in foundTemplates)
             {
-                number++;
-                label1.Text = number.ToString();
+                string text = found.template.name;
+
+                Rectangle foundRect = found.sample.contour.SourceBoundingRect;
+                // Store the bottom position and of every found object
+                bottomPositions.Add(foundRect.Bottom);
+                names.Add(text);
+
+                if (IsDigitsOnly(text))
+                {
+                    int number = int.Parse(text);
+
+                    // Look for the lowest found number that is not 0
+                    if (number > 0 && number < lowestNumbro)
+                    {
+                        // Set the lowest number
+                        lowestNumbro = number;
+
+                        // Set the bottom position of the lowest number
+                        lowestNumbroBottomPosition = foundRect.Bottom;
+                    }
+                }
             }
+
+            // If a lowest number has been found, check how many balkjes are visible beneath it
+            if (lowestNumbro != 99)
+            {
+                // Make it a multiple of 10
+                lowestNumbro *= 10;
+
+                bool correctionOfOne = false;
+
+                // Now count how many balkjes are visible beneath it
+                for (int i = 0; i < bottomPositions.Count; i++)
+                {
+                    if ((names[i].Contains("balkje") || names[i].Contains("streepje")) && bottomPositions[i] > lowestNumbroBottomPosition)
+                    {
+                        if (correctionOfOne)
+                            lowestNumbro -= 2;
+
+                        correctionOfOne = true;
+                    }
+                }
+
+                label1.Text = lowestNumbro.ToString();
+            }
+        }
+
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
         }
 
         private void btMapSelect_Click(object sender, EventArgs e)
