@@ -1,4 +1,4 @@
-Waterkiller/obj
-Waterkiller/bin
+obj/
+bin/
 *.suo
 *.user
