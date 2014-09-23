@@ -35,11 +35,13 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btScan
             // 
-            this.btScan.Location = new System.Drawing.Point(430, 61);
+            this.btScan.Location = new System.Drawing.Point(14, 91);
             this.btScan.Name = "btScan";
             this.btScan.Size = new System.Drawing.Size(75, 23);
             this.btScan.TabIndex = 0;
@@ -50,15 +52,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(373, 27);
+            this.label1.Location = new System.Drawing.Point(26, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btMapSelect
             // 
-            this.btMapSelect.Location = new System.Drawing.Point(415, 16);
+            this.btMapSelect.Location = new System.Drawing.Point(14, 32);
             this.btMapSelect.Name = "btMapSelect";
             this.btMapSelect.Size = new System.Drawing.Size(90, 23);
             this.btMapSelect.TabIndex = 2;
@@ -82,12 +85,23 @@
             this.pictureBox1.Size = new System.Drawing.Size(313, 247);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
+            //
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btMapSelect);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.btScan);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(155, 308);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Input";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 332);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.btMapSelect);
@@ -97,8 +111,11 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ClientSize = new System.Drawing.Size(663, 332);
+            this.Controls.Add(this.groupBox1);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -110,6 +127,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

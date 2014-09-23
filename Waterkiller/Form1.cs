@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 ﻿using ContourAnalysisNS;
 using Waterkiller;
+// ReSharper disable once RedundantUsingDirective
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace Waterkiller
 {
@@ -22,8 +25,17 @@ namespace Waterkiller
 
         private void btScan_Click(object sender, EventArgs e)
         {
+            label1.Text = "Running";
             ImageProcessor processor = new ImageProcessor();
-            //processor.ProcessImage(Image.FromFile("Geen_Water.jpg");
+            processor.ProcessImage(new Image<Bgr, byte>((Bitmap)Bitmap.FromFile("Geen_Water.jpg")));
+            var foundTemplates = processor.foundTemplates;
+
+            int number = 0;
+            foreach (var foundTemplateDesc in foundTemplates)
+            {
+                number++;
+                label1.Text = number.ToString();
+            }
         }
 
         private void btMapSelect_Click(object sender, EventArgs e)
@@ -60,6 +72,11 @@ namespace Waterkiller
             Waterkiller.ListboxItem selected = (Waterkiller.ListboxItem)listBox1.SelectedItem;
             pictureBox1.ImageLocation = selected.Path;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
