@@ -1,1 +1,4 @@
-Waterkiller/bin/Debug/
+Waterkiller/obj
+Waterkiller/bin
+*.suo
+*.user
