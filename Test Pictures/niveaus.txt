@@ -1,0 +1,3 @@
+Normaal + Flits= 61
+
+Tafel = 58
