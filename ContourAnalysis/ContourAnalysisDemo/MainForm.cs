@@ -144,6 +144,8 @@ namespace ContourAnalysisDemo
 
         private void ibMain_Paint(object sender, PaintEventArgs e)
         {
+            int lowestNumbro = 99;
+
             if (frame == null) return;
 
             Font font = new Font(Font.FontFamily, 24);//16
@@ -173,10 +175,45 @@ namespace ContourAnalysisDemo
                 string text = found.template.name;
                 if (showAngle)
                     text += string.Format("\r\nangle={0:000}°\r\nscale={1:0.0}", 180 * found.angle / Math.PI, found.scale);
+                //if(text.Contains("balkje"))
+                //    Console.WriteLine("bla");
+
+                if (IsDigitsOnly(text))
+                {
+                    int number = int.Parse(text);
+
+                    if(number > 0 && number < lowestNumbro)
+                    {
+                        lowestNumbro = number;
+                    }
+                }
+
                 e.Graphics.DrawRectangle(borderPen, foundRect);
                 e.Graphics.DrawString(text, font, bgBrush, new PointF(p1.X + 1 - font.Height/3, p1.Y + 1 - font.Height));
                 e.Graphics.DrawString(text, font, foreBrush, new PointF(p1.X - font.Height/3, p1.Y - font.Height));
             }
+
+            if (lowestNumbro != 99)
+            {
+                lowestNumbro *= 10;
+                Console.WriteLine(lowestNumbro);
+            }
+
+            else
+            {
+                Console.WriteLine("Alles gaat nu kapot...");
+            }
+        }
+
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
         }
 
         private void DrawAugmentedReality(FoundTemplateDesc found, Graphics gr)
