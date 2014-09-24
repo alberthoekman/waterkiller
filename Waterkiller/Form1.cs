@@ -85,11 +85,6 @@ namespace Waterkiller
             var foundTemplates = processor.foundTemplates;
 
 
-            findWaterLevel(foundTemplates);
-        }
-
-        private void findWaterLevel(List<FoundTemplateDesc> foundTemplates)
-        {
             int lowestNumbro = 99;
             int lowestNumbroBottomPosition = 0;
 
@@ -133,8 +128,7 @@ namespace Waterkiller
                 // Now count how many balkjes are visible beneath it
                 for (int i = 0; i < bottomPositions.Count; i++)
                 {
-                    if ((names[i].Contains("balkje") || names[i].Contains("streepje")) &&
-                        bottomPositions[i] > lowestNumbroBottomPosition)
+                    if ((names[i].Contains("balkje") || names[i].Contains("streepje")) && bottomPositions[i] > lowestNumbroBottomPosition)
                     {
                         if (correctionOfOne)
                             lowestNumbro -= 2;
@@ -145,6 +139,11 @@ namespace Waterkiller
 
                 label1.Text = lowestNumbro.ToString();
             }
+
+            else
+            {
+                label1.Text = "AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH";
+            }
         }
 
         private void ApplySettings()
@@ -152,16 +151,16 @@ namespace Waterkiller
             try
             {
                 processor.equalizeHist = false;
-                processor.finder.maxRotateAngle = Math.PI / 4;
+                processor.finder.maxRotateAngle = 45;
                 processor.minContourArea = 100;
                 processor.minContourLength = 100;
-                processor.finder.maxACFDescriptorDeviation = 1;
+                processor.finder.maxACFDescriptorDeviation = 5;
                 processor.finder.minACF = 0.85;
                 processor.finder.minICF = 0.96;
                 processor.blur = true;
                 processor.noiseFilter = true;
                 processor.cannyThreshold = 50;
-                processor.adaptiveThresholdBlockSize = 4;
+                processor.adaptiveThresholdBlockSize = 5;
                 processor.adaptiveThresholdParameter = 1.5;
             }
             catch (Exception ex)
