@@ -86,7 +86,7 @@ namespace Waterkiller
             var foundTemplates = processor.foundTemplates;
 
 
-            int lowestNumbro = 99;
+            int lowestNumbro = 0;
             int lowestNumbroBottomPosition = 0;
 
             // Store all them niggas
@@ -107,7 +107,7 @@ namespace Waterkiller
                     int number = int.Parse(text);
 
                     // Look for the lowest found number that is not 0
-                    if (number > 0 && number < lowestNumbro)
+                    if ((number > 0 && number < lowestNumbro) || lowestNumbro == 0)
                     {
                         // Set the lowest number
                         lowestNumbro = number;
@@ -119,7 +119,7 @@ namespace Waterkiller
             }
 
             // If a lowest number has been found, check how many balkjes are visible beneath it
-            if (lowestNumbro != 99)
+            if (lowestNumbro != 0)
             {
                 // Make it a multiple of 10
                 lowestNumbro *= 10;
