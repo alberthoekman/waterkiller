@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Waterkiller
 {
-    class ListboxItem
+    public class ListboxItem
     {
         private string path;
         private string title;
