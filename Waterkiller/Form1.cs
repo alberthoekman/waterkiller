@@ -79,7 +79,6 @@ namespace Waterkiller
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
 
-            label1.Text = "Running";
             ImageProcessor processor = new ImageProcessor();
             processor.ProcessImage(new Image<Bgr, byte>((Bitmap)Bitmap.FromFile(selected.Path)));
             var foundTemplates = processor.foundTemplates;
@@ -97,7 +96,7 @@ namespace Waterkiller
                 string text = found.template.name;
 
                 Rectangle foundRect = found.sample.contour.SourceBoundingRect;
-                // Store the bottom position and of every found object
+                // Store the bottom position and name of every found object
                 bottomPositions.Add(foundRect.Bottom);
                 names.Add(text);
 
