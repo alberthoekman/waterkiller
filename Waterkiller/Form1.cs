@@ -122,6 +122,7 @@ namespace Waterkiller
             {
                 // Make it a multiple of 10
                 lowestNumbro *= 10;
+                lowestNumbro += 2;
 
                 bool correctionOfOne = false;
 
