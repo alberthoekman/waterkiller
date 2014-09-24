@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 ﻿using ContourAnalysisNS;
 using Waterkiller;
-// ReSharper disable once RedundantUsingDirective
 using Emgu.CV;
 using Emgu.CV.Structure;
 
